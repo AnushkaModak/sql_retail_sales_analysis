@@ -68,15 +68,15 @@ UPDATE retail_sales
 SET age = (SELECT AVG(age) FROM retail_sales WHERE age IS NOT NULL)
 WHERE age IS NULL;
 ```
-##Data Analysis & Findings
-###Total transactions and unique customers:
+## Data Analysis & Findings
+### Total transactions and unique customers:
 ```sql
 SELECT 
     COUNT(transactions_id) AS total_transactions, 
     COUNT(DISTINCT customer_id) AS total_customers
 FROM retail_sales;
 ```
-###Total revenue, average sale, highest single sale:
+### Total revenue, average sale, highest single sale:
 ```sql
 SELECT 
     SUM(total_sale) AS total_revenue,
@@ -84,7 +84,7 @@ SELECT
     MAX(total_sale) AS highest_single_sale
 FROM retail_sales;
 ```
-###Customer age group distribution:
+### Customer age group distribution:
 ```sql
 SELECT 
     CASE 
@@ -98,7 +98,7 @@ FROM retail_sales
 GROUP BY age_group
 ORDER BY age_group;
 ```
-###Age group  spends the most overall:
+### Age group  spends the most overall:
 ```sql
 select 
 case 
@@ -113,13 +113,13 @@ order by total_rev desc
 	limit 1;
 ```
 
-###Count of male and female customers:
+### Count of male and female customers:
 ```sql
 select gender, count(*) 
 	from retail_sales
 group by gender;
 ```
-###Gender contribution to sales:
+### Gender contribution to sales:
 ```sql
 SELECT gender, SUM(total_sale) AS total_rev
 FROM retail_sales
@@ -127,7 +127,7 @@ GROUP BY gender
 ORDER BY total_rev DESC
 limit 1;
 ```
-###Pattern of spending depending upon gender and age:
+### Pattern of spending depending upon gender and age:
 ```sql
 select case 
 when age between 19 and 30 then 'young adults'
@@ -142,7 +142,7 @@ order by age_group, gender, total_rev desc;
 ```
 
 
-###Top 5 highest-spending customers:
+### Top 5 highest-spending customers:
 ```sql
 SELECT customer_id, SUM(total_sale) AS total_rev
 FROM retail_sales
@@ -150,7 +150,7 @@ GROUP BY customer_id
 ORDER BY total_rev DESC
 LIMIT 5;
 ```
-###Monthly sales trends:
+### Monthly sales trends:
 ```sql
 SELECT 
     EXTRACT(YEAR FROM sale_date) AS year,
@@ -160,7 +160,7 @@ FROM retail_sales
 GROUP BY year, month
 ORDER BY year, month total_sales desc;
 ```
-###Best-selling month each year:
+### Best-selling month each year:
 ```sql
 select years,
 	months, 
@@ -174,7 +174,7 @@ avg(total_sale) as avg_sales
 order by avg_sales desc
 limit 2;
 ```
-###Orders by shift (Morning, Afternoon, Evening):
+### Orders by shift (Morning, Afternoon, Evening):
 ```sql
 SELECT 
     CASE
@@ -187,7 +187,7 @@ FROM retail_sales
 GROUP BY shift
 ORDER BY total_orders DESC;
 ```
-###Busiest hours:
+### Busiest hours:
 ```sql
 select
 extract(hour from sale_time) as hours,
@@ -198,7 +198,7 @@ order by total_rev desc
 limit 1;
 ```
 
-###Most profitable category
+### Most profitable category
 ```sql
 select category,
 	sum(total_sale-cogs) as total_profit 
@@ -208,7 +208,7 @@ order by total_profit desc
 	limit 1;
 ```
 
-###product categories with most revenue and the highest quantity sold:
+### Product categories with most revenue and the highest quantity sold:
 ```sql
 select category,
 	sum(total_sale) as highest_rev,
@@ -219,8 +219,9 @@ group by category
 	limit 1;
 ```
 
-##Findings
-###summary
+## Findings
+
+### summary
 Total transactions: 1,997
 
 Unique customers: 155
@@ -233,7 +234,7 @@ Average order value (AOV): ~₹457
 
 Highest single transaction: ₹2,000
 
-###Customer Demographics & Spending
+### Customer Demographics & Spending
 
 Age groups: Middle-aged spend the most (₹414,870) → ~45% of revenue
 
@@ -243,7 +244,7 @@ Spending: Females spend more overall (₹465,400)
 
 Pattern: Middle-aged (both genders) dominate spending; females lead in every age group
 
-###Customer Spending Trends
+### Customer Spending Trends
 
 Top 5 customers: IDs 3, 1, 5, 2, 4 → highest spent by Customer 3 (₹38,440)
 
@@ -255,7 +256,7 @@ Shopping shifts: Evening dominates (1,062 orders)
 
 Peak hour: 7 PM (₹109,460 revenue)
 
-###Category Performance Insights
+### Category Performance Insights
 
 Most Profitable Category: Clothing with ₹246,679 profit
 
@@ -263,7 +264,7 @@ Highest Revenue Category: Electronics with ₹313,810 revenue
 
 Highest Quantity Sold (single transaction): Electronics (4 units)
 
-##Report
+## Report
 Summary: 1,997 transactions, 155 unique customers, strong repeat buying (avg ~13 orders per customer), total revenue ₹911,720, AOV ~₹457, highest single sale ₹2,000.
 
 Customer Demographics & Spending: Middle-aged customers drive ~45% of revenue (₹414,870); females slightly outnumber males (1,017 vs. 980) and spend more (₹465,400); females lead spending across all age groups.
@@ -273,7 +274,7 @@ Customer Spending Trends: Top spender is Customer 3 (₹38,440); peak sales in O
 Category Performance: Clothing is most profitable (₹246,679), Electronics leads in revenue (₹313,810) and highest single purchase quantity (4 units).
 
 
-##Conclusion:
+## Conclusion:
 This project serves as a comprehensive introduction to SQL for data analysts, covering database setup, data cleaning, exploratory data analysis, and business-driven SQL queries. The findings from this project can help drive business decisions by understanding sales patterns, customer behavior, and product performance.
 
 
