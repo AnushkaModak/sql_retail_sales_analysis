@@ -99,7 +99,7 @@ group by age_group
 order by age_group;
 
 
---Which age group (e.g., 20s, 30s, 40s) spends the most overall?
+--Which age group spends the most overall?
 select 
 case 
 when age between 19 and 30 then 'young adults'
@@ -210,7 +210,8 @@ order by total_profit desc
 
 --Which product categories bring in the most revenue and the highest quantity sold?
 select category,
-	sum(total_sale) as highest_rev
+	sum(total_sale) as highest_rev,
+	max(quantity) as highest_quantity, 
 from retail_sales
 group by category
 	order by highest_rev desc
